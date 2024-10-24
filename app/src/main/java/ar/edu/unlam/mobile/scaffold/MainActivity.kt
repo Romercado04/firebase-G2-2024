@@ -5,22 +5,27 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyAPI
+import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyHTTPRepository
+import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyNetworkRepository
+import ar.edu.unlam.mobile.scaffold.data.kitty.repository.KittyDefaultRepository
+import ar.edu.unlam.mobile.scaffold.data.kitty.repository.KittyRepository
+import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyService
 import ar.edu.unlam.mobile.scaffold.ui.components.BottomBar
 import ar.edu.unlam.mobile.scaffold.ui.screens.HomeScreen
+import ar.edu.unlam.mobile.scaffold.ui.screens.ListScreen
+import ar.edu.unlam.mobile.scaffold.ui.screens.ListViewModel
 import ar.edu.unlam.mobile.scaffold.ui.screens.SecondaryScreen
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,11 +53,6 @@ fun MainScreen() {
     val controller = rememberNavController()
     Scaffold(
         bottomBar = { BottomBar(controller = controller) },
-        floatingActionButton = {
-            IconButton(onClick = { controller.navigate("home") }) {
-                Icon(Icons.Filled.Home, contentDescription = "Home")
-            }
-        },
     ) { paddingValue ->
         // NavHost es el componente que funciona como contenedor de los otros componentes que
         // podrán ser destinos de navegación.
@@ -69,6 +69,9 @@ fun MainScreen() {
             ) { navBackStackEntry ->
                 val id = navBackStackEntry.arguments?.getInt("id") ?: 1
                 SecondaryScreen(controller = controller, id = id)
+            }
+            composable("list"){
+                ListScreen(viewModel = hiltViewModel())
             }
         }
     }

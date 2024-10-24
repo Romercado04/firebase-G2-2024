@@ -10,4 +10,11 @@ class KittyDefaultRepository @Inject constructor(val networkRepository: KittyNet
     override suspend fun getKitty(): Flow<Kitty> {
         return this.networkRepository.getRandomKitty().map { it.toKitty() }
     }
+
+    override suspend fun getAllKitties(): Flow<List<Kitty>> {
+        return this.networkRepository.getAllKitties()
+            .map { list ->
+                list.map { it.toKitty() }
+            }
+    }
 }

@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface KittyRepository {
     suspend fun getKitty(): Flow<Kitty>
+    suspend fun getAllKitties(): Flow<List<Kitty>>
 }

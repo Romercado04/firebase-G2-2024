@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "735755406540",
+    "project_id": "fir-2024-2fc1a",
+    "storage_bucket": "fir-2024-2fc1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735755406540:android:3928ae8ad06a25c5ab4669",
+        "android_client_info": {
+          "package_name": "ar.edu.unlam.mobile.scaffold"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgOdF_NiOUuK6zReZT9xdc0pXE-u7M6e0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

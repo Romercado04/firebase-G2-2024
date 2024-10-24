@@ -10,4 +10,10 @@ class KittyHTTPRepository @Inject constructor(private val api: KittyAPI) : Kitty
             emit(api.getKitties()[0])
         }
     }
+
+    override suspend fun getAllKitties(): Flow<List<KittyAPIModel>> {
+        return flow {
+            emit(api.getKitties())
+        }
+    }
 }
