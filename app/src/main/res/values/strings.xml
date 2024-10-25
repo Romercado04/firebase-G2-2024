@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string name="error_message">Error buscando la información</string>
+    <string name="retry_button">Reintentar</string>
+
+</resources>
