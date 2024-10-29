@@ -34,8 +34,4 @@ class KittyMockService @Inject constructor() : KittyGetter {
             )
         }
     }
-
-    override suspend fun getAllKitties(): Flow<List<Kitty>> {
-        TODO("Not yet implemented")
-    }
 }

@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface KittyNetworkRepository {
     suspend fun getRandomKitty(): Flow<KittyAPIModel>
-    suspend fun getAllKitties(): Flow<List<KittyAPIModel>>
+//    suspend fun getAllKitties(): Flow<List<KittyAPIModel>>
 }

@@ -3,7 +3,6 @@ package ar.edu.unlam.mobile.scaffold.ui.screens.profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -68,31 +67,23 @@ fun ProfileScreen(
                 )
                 Spacer(modifier = Modifier.height(30.dp))
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.End,
+                Button(onClick = { controller.popBackStack() }) {
+                    Text("Cancelar")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        viewModel.viewModelScope.launch {
+                            viewModel.signOut()
+                        }
+                        controller.navigate(NavigationRoutes.Login.route)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 ) {
-                    Button(onClick = { controller.popBackStack() }) {
-                        Text("Cancelar")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            viewModel.viewModelScope.launch {
-                                viewModel.signOut()
-                            }
-                            controller.navigate(NavigationRoutes.Login.route)
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                    ) {
-                        Text("Cerrar Sesion", color = Color.Red)
-                    }
+                    Text("Cerrar Sesion", color = Color.Red)
                 }
             }
-        } ?: Text("Cargando...", style = MaterialTheme.typography.bodyMedium)
-
-
+        }
     }
 }
+

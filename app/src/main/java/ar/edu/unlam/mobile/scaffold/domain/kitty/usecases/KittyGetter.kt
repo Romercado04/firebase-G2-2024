@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface KittyGetter {
     suspend fun getKitty(): Flow<Kitty>
     suspend fun getKittyById(id: Int): Flow<Kitty>
-    suspend fun getAllKitties(): Flow<List<Kitty>>
+//    suspend fun getAllKitties(): Flow<List<Kitty>>
 }
