@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.domain.kitty.services
 
 import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Kitty
+import ar.edu.unlam.mobile.scaffold.domain.kitty.usecases.KittyGetter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

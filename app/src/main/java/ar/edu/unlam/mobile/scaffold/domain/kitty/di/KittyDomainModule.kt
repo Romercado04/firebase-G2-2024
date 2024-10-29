@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.domain.kitty.di
 
-import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyGetter
+import ar.edu.unlam.mobile.scaffold.domain.kitty.usecases.KittyGetter
 import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyService
 import dagger.Binds
 import dagger.Module

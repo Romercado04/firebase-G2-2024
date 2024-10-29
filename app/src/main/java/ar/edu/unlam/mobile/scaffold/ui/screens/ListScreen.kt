@@ -12,7 +12,7 @@ import ar.edu.unlam.mobile.scaffold.ui.components.ShowLoading
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun ListScreen(viewModel: ListViewModel) {
+fun ListScreen(viewModel: ListViewModel = hiltViewModel()) {
     val screenState by viewModel.screenState.collectAsState(initial = ListScreenState.Loading)
 
     when (screenState) {

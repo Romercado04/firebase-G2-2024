@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.domain.kitty.services
+package ar.edu.unlam.mobile.scaffold.domain.kitty.usecases
 
 import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Kitty
 import kotlinx.coroutines.flow.Flow

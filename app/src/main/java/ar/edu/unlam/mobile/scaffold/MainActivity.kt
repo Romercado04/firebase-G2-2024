@@ -9,24 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyAPI
-import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyHTTPRepository
-import ar.edu.unlam.mobile.scaffold.data.kitty.network.KittyNetworkRepository
-import ar.edu.unlam.mobile.scaffold.data.kitty.repository.KittyDefaultRepository
-import ar.edu.unlam.mobile.scaffold.data.kitty.repository.KittyRepository
-import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyService
 import ar.edu.unlam.mobile.scaffold.ui.components.BottomBar
-import ar.edu.unlam.mobile.scaffold.ui.screens.HomeScreen
-import ar.edu.unlam.mobile.scaffold.ui.screens.ListScreen
-import ar.edu.unlam.mobile.scaffold.ui.screens.ListViewModel
-import ar.edu.unlam.mobile.scaffold.ui.screens.SecondaryScreen
+import ar.edu.unlam.mobile.scaffold.ui.navigation.NavigationComponent
+import ar.edu.unlam.mobile.scaffold.ui.navigation.NavigationRoutes
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +26,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     MainScreen()
                 }
             }
@@ -48,31 +40,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     // Controller es el elemento que nos permite navegar entre pantallas. Tiene las acciones
-    // para navegar como naviegate y también la información de en dónde se "encuentra" el usuario
+    // para navegar como navigate y también la información de en dónde se "encuentra" el usuario
     // a través del back stack
     val controller = rememberNavController()
+    val navBackStackEntry by controller.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    print("The currentRoute is: $currentRoute\n")
     Scaffold(
-        bottomBar = { BottomBar(controller = controller) },
+        bottomBar = {
+            if (currentRoute == NavigationRoutes.Home.route ||
+                currentRoute == NavigationRoutes.ListScreen.route ||
+                currentRoute == NavigationRoutes.Profile.route) {
+                BottomBar(controller = controller)
+            }
+        },
     ) { paddingValue ->
-        // NavHost es el componente que funciona como contenedor de los otros componentes que
-        // podrán ser destinos de navegación.
-        NavHost(navController = controller, startDestination = "home") {
-            // composable es el componente que se usa para definir un destino de navegación.
-            // Por parámetro recibe la ruta que se utilizará para navegar a dicho destino.
-            composable("home") {
-                // Home es el componente en sí que es el destino de navegación.
-                HomeScreen(modifier = Modifier.padding(paddingValue))
-            }
-            composable(
-                route = "segundo/{id}",
-                arguments = listOf(navArgument("id") { type = NavType.IntType }),
-            ) { navBackStackEntry ->
-                val id = navBackStackEntry.arguments?.getInt("id") ?: 1
-                SecondaryScreen(controller = controller, id = id)
-            }
-            composable("list"){
-                ListScreen(viewModel = hiltViewModel())
-            }
-        }
+        NavigationComponent(navController = controller, modifier = Modifier.padding(paddingValue))
     }
 }
+
+
