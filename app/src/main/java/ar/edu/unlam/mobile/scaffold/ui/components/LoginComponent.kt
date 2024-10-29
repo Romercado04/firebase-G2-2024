@@ -161,8 +161,5 @@ fun LoginComponent(
         is LoginUiState.Error -> {
             Toast.makeText(context, "Failed login", Toast.LENGTH_SHORT).show()
         }
-
-        else -> {}
     }
-
 }

@@ -37,7 +37,7 @@ fun LoginScreen(navHostController: NavHostController) {
                 is AuthRes.Success -> {
                     val credential = GoogleAuthProvider.getCredential(account.data.idToken, null)
                     scope.launch {
-                        val user = loginViewModel.signInWithGoogleCredential(credential)
+                        loginViewModel.signInWithGoogleCredential(credential)
 
                         Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
                         navHostController.navigate(NavigationRoutes.Home.route) {
