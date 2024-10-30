@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.domain.kitty.services
 
 import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Kitty
+import ar.edu.unlam.mobile.scaffold.domain.kitty.usecases.KittyGetter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -32,9 +33,5 @@ class KittyMockService @Inject constructor() : KittyGetter {
                 ),
             )
         }
-    }
-
-    override suspend fun getAllKitties(): Flow<List<Kitty>> {
-        TODO("Not yet implemented")
     }
 }

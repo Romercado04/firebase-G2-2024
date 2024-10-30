@@ -15,7 +15,7 @@ fun ShowKitties(kitties: List<Kitty>) {
         contentPadding = PaddingValues(16.dp)
     ) {
         items(kitties.size) { kitty ->
-            KittyCard(kitties[kitty])
+            KittyItem(kitties[kitty], {})
         }
     }
 }

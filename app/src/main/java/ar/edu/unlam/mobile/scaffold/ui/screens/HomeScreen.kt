@@ -34,6 +34,12 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltVie
 @Composable
 fun Body(kitty: Kitty, action: () -> Unit, modifier: Modifier = Modifier) {
     Column {
-        PhotoCard(text = kitty.id, title = kitty.url, imageUrl = kitty.url, action = action, modifier = modifier)
+        PhotoCard(
+            text = kitty.id,
+            title = kitty.url,
+            imageUrl = kitty.url,
+            action = action,
+            modifier = modifier
+        )
     }
 }

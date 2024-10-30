@@ -3,7 +3,8 @@ package ar.edu.unlam.mobile.scaffold.ui.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Kitty
-import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyGetter
+import ar.edu.unlam.mobile.scaffold.domain.kitty.services.KittyService
+import ar.edu.unlam.mobile.scaffold.domain.kitty.usecases.KittyGetter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @Immutable
 sealed interface KittyUIState {
     data class Success(val kitty: Kitty) : KittyUIState
-    object Loading : KittyUIState
+    data object Loading : KittyUIState
     data class Error(val message: String) : KittyUIState
 }
 
@@ -23,7 +24,10 @@ data class HomeUIState(
 )
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val kittyGetter: KittyGetter) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val kittyGetter: KittyGetter,
+    private val kittyService: KittyService,
+) : ViewModel() {
     // Mutable State Flow contiene un objeto de estado mutable. Simplifica la operación de actualización de
     // información y de manejo de estados de una aplicación: Cargando, Error, Éxito.
     // (https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
@@ -47,6 +51,7 @@ class HomeViewModel @Inject constructor(val kittyGetter: KittyGetter) : ViewMode
         viewModelScope.launch {
             kittyGetter.getKitty().collect {
                 _uiState.value = HomeUIState(KittyUIState.Success(it))
+                kittyService.addKittyToHistory(it)
             }
         }
     }
