@@ -9,18 +9,19 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AuthNetworkImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) : AuthNetworkInterface  {
+class AuthNetworkImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) :
+    AuthNetworkInterface {
     //iniciamos sesion con la credencial de google
     @SuppressLint("SuspiciousIndentation")
     override suspend fun signInWithGoogle(credential: AuthCredential): AuthRes<FirebaseUser> =
         try{
         val firebaseUser = firebaseAuth.signInWithCredential(credential).await()
-            firebaseUser.user?.let {
-                AuthRes.Success(it)
-            } ?: throw Exception("Sign in with Google failed")
-        } catch (e: Exception){
-            AuthRes.Error(e.message ?: "Sign in with Google failed")
-            }
+        firebaseUser.user?.let {
+            AuthRes.Success(it)
+        } ?: throw Exception("Sign in with Google failed")
+    }catch (e: Exception) {
+        AuthRes.Error(e.message ?: "Sign in with Google failed")
+    }
 
     override suspend fun signOut() {
         firebaseAuth.signOut()
@@ -35,12 +36,12 @@ class AuthNetworkImpl @Inject constructor(private val firebaseAuth: FirebaseAuth
         try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             val firebaseUser = result.user
-            if(firebaseUser != null){
+            if (firebaseUser != null) {
                 AuthRes.Success(firebaseUser)
-            }else{
+            } else {
                 AuthRes.Error("Authentication failed")
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             AuthRes.Error(e.message ?: "An error occurred while logging in")
         }
 
@@ -52,16 +53,16 @@ class AuthNetworkImpl @Inject constructor(private val firebaseAuth: FirebaseAuth
         try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             val firebaseUser = result.user
-            if(firebaseUser != null){
+            if (firebaseUser != null) {
                 val profileUpdate = UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
                     .build()
                 firebaseUser.updateProfile(profileUpdate).await()
                 AuthRes.Success(firebaseUser)
-            }else{
+            } else {
                 AuthRes.Error("User creation failed: No user found")
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             AuthRes.Error(e.message ?: "An unknown error occurred")
         }
 

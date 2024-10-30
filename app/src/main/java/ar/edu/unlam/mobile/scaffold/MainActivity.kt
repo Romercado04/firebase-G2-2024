@@ -48,9 +48,11 @@ fun MainScreen() {
     print("The currentRoute is: $currentRoute\n")
     Scaffold(
         bottomBar = {
-            if (currentRoute == NavigationRoutes.Home.route ||
+            if (
+                currentRoute == NavigationRoutes.Home.route ||
                 currentRoute == NavigationRoutes.ListScreen.route ||
-                currentRoute == NavigationRoutes.Profile.route) {
+                currentRoute == NavigationRoutes.Profile.route
+            ) {
                 BottomBar(controller = controller)
             }
         },
@@ -58,5 +60,3 @@ fun MainScreen() {
         NavigationComponent(navController = controller, modifier = Modifier.padding(paddingValue))
     }
 }
-
-
