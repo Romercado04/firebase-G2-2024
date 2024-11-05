@@ -17,12 +17,17 @@ import ar.edu.unlam.mobile.scaffold.ui.components.BottomBar
 import ar.edu.unlam.mobile.scaffold.ui.navigation.NavigationComponent
 import ar.edu.unlam.mobile.scaffold.ui.navigation.NavigationRoutes
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme

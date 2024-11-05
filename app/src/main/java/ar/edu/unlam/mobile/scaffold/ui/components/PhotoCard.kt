@@ -21,12 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.analytics
+import com.google.firebase.analytics.logEvent
 
-// https://www.develou.com/cards-en-jetpack-compose/
 @Composable
 fun PhotoCard(text: String, title: String, imageUrl: String, action: () -> Unit, modifier: Modifier = Modifier) {
+    val firebaseAnalytics = Firebase.analytics
     Card(modifier = modifier) {
-        Column() {
+        Column {
             Row(
                 Modifier.fillMaxWidth().height(250.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -73,11 +76,15 @@ fun PhotoCard(text: String, title: String, imageUrl: String, action: () -> Unit,
                     .padding(horizontal = 8.dp)
                     .fillMaxWidth(),
             ) {
-                // Botones
-
-                // Iconos
                 Row(modifier = Modifier.align(Alignment.CenterEnd)) {
-                    IconButton(onClick = action) {
+                    IconButton(onClick = {
+                        // Registro de evento de Analytics
+                        firebaseAnalytics.logEvent("refresh_button_clicked") {
+                            param("kitty_id", text)
+                        }
+                        // Acción de refresh
+                        action()
+                    }) {
                         Icon(Icons.Default.Refresh, contentDescription = null)
                     }
                 }
