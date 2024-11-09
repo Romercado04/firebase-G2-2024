@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,8 @@ import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.messaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +30,19 @@ class MainActivity : ComponentActivity() {
     lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //se inicializan los servicios de firebase
         firebaseAnalytics = Firebase.analytics
+        Firebase.messaging.isAutoInitEnabled = true
+        //Se obtiene el token de firebase
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                println("FCM Token: $token")
+                Log.d("MainActivity", "FCM Token: $token")
+            } else {
+                println("Error al obtener el token de FCM: ${task.exception}")
+            }
+        }
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
